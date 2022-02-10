@@ -1,0 +1,21 @@
+version: '2.4'
+services:
+    nextjs-project:
+        command: ["sh", "-c", "yarn build:prd"]
+        container_name: nextjs-project
+        image: '{DOCKER_IMAGE}'
+        ports:
+        - '4401:3000'
+        logging:
+            driver: "json-file"
+            options:
+                max-file: '3'
+                max-size: '50m'
+        cpus: 1
+        mem_limit: 1gb
+        network_mode: bridge
+        environment: 
+            - NODE_ENV=production
+        ulimits:
+            core: 0
+        restart: unless-stopped
